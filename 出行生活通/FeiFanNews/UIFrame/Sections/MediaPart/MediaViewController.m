@@ -1,0 +1,126 @@
+//
+//  MediaViewController.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/10/29.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "MediaViewController.h"
+#import "VideoViewController.h"
+#import "RadioViewController.h"
+#import "FeiFanHeader.h"
+#import "DataBaseHandle.h"
+
+
+@interface MediaViewController ()<UIScrollViewDelegate>
+
+@property(nonatomic,retain)UISegmentedControl *segmentControl;
+@property(nonatomic,retain)VideoViewController *videoVC;
+@property(nonatomic,retain)RadioViewController *radioVC;
+@property(nonatomic,retain)UIScrollView *scrollView;
+
+
+@end
+
+@implementation MediaViewController
+
+- (void)dealloc
+{
+    self.segmentControl = nil;
+    self.videoVC = nil;
+    self.radioVC = nil;
+    self.scrollView = nil;
+    [super dealloc];
+}
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    [self buildSegmentControl];
+    [self buildScrollView];
+    
+    [[DataBaseHandle shareDataBaseHandle]createVideoTable];
+    [[DataBaseHandle shareDataBaseHandle]createRadioTable];
+    
+}
+
+//创建segmentControl
+- (void)buildSegmentControl{
+
+    self.segmentControl = [[UISegmentedControl alloc]initWithItems:@[@"视频",@"电台"]];
+    self.navigationItem.titleView = self.segmentControl;
+    [self.segmentControl addTarget:self action:@selector(handleControlAction:) forControlEvents:(UIControlEventValueChanged)];
+    self.segmentControl.selectedSegmentIndex = 0;
+    [self.segmentControl release];
+
+}
+
+//segmentControl事件
+- (void)handleControlAction:(UISegmentedControl *)sender{
+
+    [self.scrollView setContentOffset:CGPointMake(self.scrollView.bounds.size.width*sender.selectedSegmentIndex, 0)];
+
+}
+
+//创建scrollview
+- (void)buildScrollView{
+
+    //scrollView
+    self.scrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, MAIN_SCREEN_WIDTH, MAIN_SCREEN_HEIGHT-108)];
+    self.scrollView.contentSize = CGSizeMake(MAIN_SCREEN_WIDTH*2, MAIN_SCREEN_HEIGHT-108);
+    
+    //为self添加自视图控制器
+    self.videoVC = [[VideoViewController alloc]init];
+    self.radioVC = [[RadioViewController alloc]init];
+    [self addChildViewController:self.videoVC];
+    [self addChildViewController:self.radioVC];
+    
+    
+    self.videoVC.view.frame = CGRectMake(0, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    self.radioVC.view.frame = CGRectMake(MAIN_SCREEN_WIDTH, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    [self.scrollView addSubview:self.videoVC.view];
+    [self.scrollView addSubview:self.radioVC.view];
+    
+    self.scrollView.pagingEnabled = YES;
+    
+    //设置scrollView代理
+    self.scrollView.delegate = self;
+    
+    [self.view addSubview:self.scrollView];
+  
+    [self.videoVC release];
+    [self.radioVC release];
+    [self.scrollView release];
+    
+}
+
+//scrollView代理方法
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+
+    self.segmentControl.selectedSegmentIndex = scrollView.contentOffset.x/scrollView.frame.size.width;
+    
+}
+
+
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

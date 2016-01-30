@@ -1,0 +1,88 @@
+//
+//  Helper.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/10/29.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "Helper.h"
+#import "FMDatabase.h"
+#import <sqlite3.h>
+#import "NewsModel.h"
+#import "FMDB.h"
+
+
+@interface Helper()
+@property (nonatomic,retain)FMDatabase *newsDB;
+
+@end
+@implementation Helper
+- (void)dealloc
+{
+    self.newsDB = nil;
+    [super dealloc];
+}
+
+static Helper *helper = nil;
++ (Helper *)shareDateBase{
+    static dispatch_once_t oneToken;
+    dispatch_once(&oneToken, ^{
+        helper = [[Helper alloc]init];
+    });
+    return helper;
+}
+
+static sqlite3 *db1 = nil;
+
+//写一个私有的方法，返回数据库的位置
+- (NSString *)dataBasePath{
+    return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject]stringByAppendingPathComponent:@"news.sqlite"];
+}
+
+//打开数据库的方法
+- (void)openDateBase{
+    NSString *dbPath = [self dataBasePath];
+    self.newsDB = [FMDatabase databaseWithPath:dbPath];
+    BOOL isOpen = [self.newsDB open];
+    if (isOpen) {
+//        NSLog(@"打开成功");
+       [self.newsDB executeUpdate:@"create table if not exists News (number integer primary key autoincrement,id text,name text)"];
+//        NSLog(@"%@",isCreate ? @"创建成功" : @"创建失败");
+    }else {
+//        NSLog(@"打开失败");
+    }
+//    NSLog(@"%@",NSHomeDirectory());
+    
+}
+//关闭数据库的方法
+- (void)closeDataBase{
+    sqlite3_close(db1);
+}
+
+//向数据库中插入数据
+- (void)insertIntoDateBase:(NewsModel *)model{
+//    NSLog(@"---%@",model.tid);
+//    NSLog(@"---%@",model.tname);
+   BOOL result = [self.newsDB executeUpdate:@"insert into News (id,name)values(?,?)",model.tid,model.tname];
+    NSLog(@"%@",result ? @"插入成功" : @"插入失败");
+}
+//查询所有的数据库数据
+- (NSMutableArray *)seleteAllIdfromDBTable{
+//    [self.newsDB open];
+    FMResultSet *set = [self.newsDB executeQuery:@"select * from News"];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+    while ([set next]) {
+        NSLog(@"....");
+        NSString *idName = [set stringForColumn:@"id"];
+        NSString *tName  = [set stringForColumn:@"name"];
+        NewsModel *model = [[NewsModel alloc]init];
+        model.tid = idName;
+        model.tname = tName;
+        [array addObject:model];
+        [model release];
+    }
+    return array;
+}
+
+@end

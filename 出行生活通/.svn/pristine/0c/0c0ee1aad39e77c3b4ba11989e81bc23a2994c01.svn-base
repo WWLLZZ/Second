@@ -1,0 +1,23 @@
+//
+//  Helper.h
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/10/29.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+@class NewsModel;
+@interface Helper : NSObject
++ (Helper *)shareDateBase;
+//打开数据库的方法
+- (void)openDateBase;
+//关闭数据库的方法
+- (void)closeDataBase;
+//向数据库中插入数据
+- (void)insertIntoDateBase:(NewsModel *)model;
+//查询所有的数据库数据
+- (NSMutableArray *)seleteAllIdfromDBTable;
+
+@end

@@ -1,0 +1,183 @@
+//
+//  MineViewController.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/10/28.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "MineViewController.h"
+#import "MineChirldViewController.h"
+#import "WeatherController.h"
+#import "CollectController.h"
+#import "MapsController.h"
+
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
+
+@interface MineViewController ()
+@property (nonatomic,retain)MineChirldViewController *mineVC;
+@property (nonatomic,retain)UINavigationController *mineNC;
+@property (nonatomic,assign)BOOL isRight;
+@property (nonatomic,retain)UIViewController *viewControl;
+
+@property (nonatomic,retain)UIImageView *cloudView;
+@property (nonatomic,retain)UIButton *mapsButton;
+@property (nonatomic,retain)UIButton *weatherButton;
+@property (nonatomic,retain)UIButton *collectButton;
+@property (nonatomic,retain)UIButton *cleanButton;
+
+@end
+
+@implementation MineViewController
+- (void)dealloc
+{
+    self.viewControl = nil;
+    self.mineNC = nil;
+    self.mineVC = nil;
+    [super dealloc];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+//    [self drawerinView];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bobo_video_cover@2x"]];
+    self.mapsButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    self.mapsButton.frame = CGRectMake(100, 100, 100, 30);
+    self.mapsButton.backgroundColor = [UIColor greenColor];
+    [self.mapsButton setTitle:@"地图" forState:(UIControlStateNormal)];
+    [self.mapsButton addTarget:self action:@selector(handleMaps:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    self.collectButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    self.collectButton.frame = CGRectMake(100, 150, 100, 30);
+    self.collectButton.backgroundColor = [UIColor cyanColor];
+    [self.collectButton setTitle:@"收藏" forState:(UIControlStateNormal)];
+    [self.collectButton addTarget:self action:@selector(handleCollect:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    self.weatherButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+    self.weatherButton.frame = CGRectMake(100, 200, 100, 30);
+    
+    self.weatherButton.backgroundColor = [UIColor magentaColor];
+    [self.weatherButton setTitle:@"天气" forState:(UIControlStateNormal)];
+    [self.weatherButton addTarget:self action:@selector(handleWeather:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [self.view addSubview:self.weatherButton];
+    [self.view addSubview:self.collectButton];
+    [self.view addSubview:self.mapsButton];
+}
+- (void)handleMaps:(UIButton *)handle{
+    MapsController *maps = [[MapsController alloc]init];
+    [self.navigationController pushViewController:maps animated:YES];
+}
+- (void)handleCollect:(UIButton *)sender{
+    
+    CollectController *collect = [[CollectController alloc]init];
+    [self.navigationController pushViewController:collect animated:YES];
+    
+}
+
+- (void)handleWeather:(UIButton *)sender{
+    WeatherController *weather = [[WeatherController alloc]init];
+    
+    [self.navigationController pushViewController:weather animated:YES];
+}
+
+- (void)drawerinView{
+    self.view.backgroundColor = [UIColor greenColor];
+//    UIImageView *backImageView  = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    backImageView.image = [UIImage imageNamed:@"12"];
+    self.mineVC = [[MineChirldViewController alloc]init];
+    UINavigationController *rootNC = [[UINavigationController alloc]initWithRootViewController:self.mineVC];
+    self.mineNC = rootNC;
+//    self.mineVC = [[MineChirldViewController alloc]init];
+    self.mineVC.view.frame = CGRectMake(0, 64, kScreenWidth, kScreenHeight);
+    [self addChildViewController:self.mineNC];
+     [self.view addSubview:self.mineNC.view];
+   
+    self.navigationItem.rightBarButtonItem = ({
+        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"抽屉" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemAction:)];
+        rightBarButtonItem;
+    });
+}
+- (void)rightBarButtonItemAction:(UIBarButtonItem *)sender
+{
+    if (!self.isRight) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.mineNC.view.frame = CGRectMake(-kScreenWidth*0.21, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height -kScreenWidth*0.1 );
+            self.navigationController.navigationBar.frame = CGRectMake(-kScreenWidth *0.21, 0, kScreenWidth, 64);
+            self.tabBarController.tabBar.frame = CGRectMake(-kScreenWidth *0.21, kScreenHeight-64, kScreenWidth, 49);
+        }];
+    } else {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.mineNC.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        self.navigationController.navigationBar.frame = CGRectMake(0, 0, kScreenWidth, 64);
+            self.tabBarController.tabBar.frame = CGRectMake(0, kScreenHeight-49, kScreenWidth, 49);
+        }];
+    }
+    self.isRight = !_isRight;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//#warning Incomplete method implementation.
+    // Return the number of rows in the section.
+    return 2;
+}
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

@@ -1,0 +1,59 @@
+//
+//  NewsModel.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/10/28.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "NewsModel.h"
+
+@implementation NewsModel
+- (void)dealloc
+{
+
+    self.video = nil;
+    self.url_mp4 = nil;
+    self.squareimgurl = nil;
+    self.imgtitle = nil;
+    self.note = nil;
+    self.setname = nil;
+    self.photos = nil;
+    self.source = nil;
+    self.pixel = nil;
+    self.src =  nil;
+    self.ref = nil;
+    self.ptime = nil;
+    self.body = nil;
+    self.img = nil;
+    self.docid = nil;
+    self.imgextra = nil;
+    self.skipType = nil;
+    self.digest = nil;
+    self.title = nil;
+    self.imgsrc = nil;
+    self.tname =nil;
+    self.tid = nil;
+    self.photosetID = nil;
+    [super dealloc];
+}
+
++(instancetype)detailImageWithDic:(NSDictionary *)dict{
+    NewsModel *model = [[self alloc]init];
+    model.title = dict[@"title"];
+    model.ptime = dict[@"ptime"];
+    model.body = dict[@"body"];
+    model.img = dict[@"img"];
+    model.source = dict[@"source"];
+    
+    model.photos = dict[@"photos"];
+    model.setname = dict[@"setname"];
+    return model;
+}
+
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key{
+
+}
+
+@end

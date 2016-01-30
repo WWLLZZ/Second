@@ -1,0 +1,79 @@
+//
+//  CollectController.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/11/5.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "CollectController.h"
+
+@interface CollectController ()
+@property (nonatomic,retain)UIButton *radioButton;
+@property (nonatomic,retain)UIButton *videoButton;
+@property (nonatomic,retain)UIButton *backButton;
+@end
+
+@implementation CollectController
+- (void)dealloc
+{
+    self.radioButton = nil;
+    self.videoButton = nil;
+    [super dealloc];
+}
+- (UIButton *)radioButton{
+    if (_radioButton == nil) {
+        self.radioButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.radioButton.frame = CGRectMake(100, 100, 150, 30);
+        [self.radioButton setTitle:@"我收藏的电影" forState:(UIControlStateNormal)];
+        self.radioButton.backgroundColor = [UIColor redColor];
+    }
+    return [[_radioButton retain]autorelease];
+}
+
+- (UIButton *)videoButton{
+    if (_videoButton == nil) {
+        self.videoButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.videoButton.frame = CGRectMake(100, 160, 150, 30);
+        [self.videoButton setTitle:@"我收藏的电台" forState:(UIControlStateNormal)];
+        self.videoButton.backgroundColor = [UIColor greenColor];
+    }
+    return [[_videoButton retain]autorelease];
+}
+- (UIButton *)backButton{
+    if (_backButton == nil) {
+        self.backButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.backButton.frame = CGRectMake(-20, 20, 80, 30);
+    }
+    return [[_backButton retain]autorelease];
+
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.radioButton];
+    [self.view addSubview:self.videoButton];
+    [self.backButton setImage:[UIImage imageNamed:@"back_button"] forState:(UIControlStateNormal)];
+    [self.backButton addTarget:self action:@selector(backtoWeather:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.backButton];
+}
+- (void)backtoWeather:(UIButton *)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

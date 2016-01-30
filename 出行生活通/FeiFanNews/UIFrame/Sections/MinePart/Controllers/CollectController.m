@@ -1,0 +1,187 @@
+//
+//  CollectController.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/11/5.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "CollectController.h"
+#import "VideoCollectViewController.h"
+
+#import "StoryCollectController.h"
+#import "TNCollectController.h"
+
+#import "RadioCollectViewController.h"
+#import "WeatherController.h"
+#import "FeiFanHeader.h"
+@interface CollectController ()
+@property (nonatomic,retain)UIButton *radioButton;
+@property (nonatomic,retain)UIButton *videoButton;
+@property (nonatomic,retain)UIButton *backButton;
+@property(nonatomic,retain)UIButton *MyStoryButton;
+@property(nonatomic,retain)UIButton *MyTNButton;
+
+@end
+
+@implementation CollectController
+- (void)dealloc
+{
+    self.radioButton = nil;
+    self.videoButton = nil;
+    self.MyStoryButton = nil;
+    self.MyStoryButton = nil;
+
+    [super dealloc];
+}
+- (UIButton *)radioButton{
+    if (_radioButton == nil) {
+        self.radioButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.radioButton.frame = CGRectMake(MAIN_SCREEN_WIDTH * 0.31, MAIN_SCREEN_WIDTH * 0.31, MAIN_SCREEN_WIDTH * 0.46, MAIN_SCREEN_WIDTH * 0.09);
+        [self.radioButton setTitle:@"我收藏的电台" forState:(UIControlStateNormal)];
+       self.radioButton.backgroundColor = [UIColor orangeColor];
+    }
+    return [[_radioButton retain]autorelease];
+}
+
+- (UIButton *)videoButton{
+    if (_videoButton == nil) {
+        self.videoButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.videoButton.frame = CGRectMake(MAIN_SCREEN_WIDTH * 0.31, MAIN_SCREEN_WIDTH * 0.56, MAIN_SCREEN_WIDTH * 0.46, MAIN_SCREEN_WIDTH * 0.09);
+        [self.videoButton setTitle:@"我收藏的电影" forState:(UIControlStateNormal)];
+        self.videoButton.backgroundColor = [UIColor greenColor];
+    }
+    return [[_videoButton retain]autorelease];
+}
+
+- (UIButton *)MyStoryButton{
+    if (_MyStoryButton == nil) {
+        self.MyStoryButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        self.MyStoryButton.frame = CGRectMake(MAIN_SCREEN_WIDTH * 0.31, MAIN_SCREEN_WIDTH * 0.90, MAIN_SCREEN_WIDTH * 0.46, MAIN_SCREEN_WIDTH * 0.09);
+        self.MyStoryButton.backgroundColor = [UIColor redColor];
+        [self.MyStoryButton setTitle:@"我的故事" forState:(UIControlStateNormal)];
+        [self.MyStoryButton addTarget:self action:@selector(collectAction:) forControlEvents:(UIControlEventTouchUpInside)];
+    }
+    return [[_MyStoryButton retain]autorelease];
+    
+    
+}
+
+- (UIButton *)MyTNButton{
+    if (_MyTNButton == nil) {
+        self.MyTNButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+        self.MyTNButton.backgroundColor = [UIColor orangeColor];
+        self.MyTNButton.frame = CGRectMake(MAIN_SCREEN_WIDTH * 0.31, MAIN_SCREEN_WIDTH * 1.25, MAIN_SCREEN_WIDTH * 0.46, MAIN_SCREEN_WIDTH * 0.09);
+        [self.MyTNButton setTitle:@"我的游记" forState:(UIControlStateNormal)];
+        [self.MyTNButton addTarget:self action:@selector(TNAction:) forControlEvents:(UIControlEventTouchUpInside)];
+        
+    }
+
+    return [[_MyTNButton retain]autorelease];
+
+}
+
+- (UIButton *)backButton{
+    if (_backButton == nil) {
+        self.backButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        self.backButton.frame = CGRectMake(-20, 20, 80, 30);
+    }
+    return [[_backButton retain]autorelease];
+
+}
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.radioButton];
+    [self.radioButton addTarget:self action:@selector(handleCollectRadio:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [self.view addSubview:self.videoButton];
+    [self.videoButton addTarget:self action:@selector(handleCollectVideo:) forControlEvents:(UIControlEventTouchUpInside)];
+    
+    [self.backButton setImage:[UIImage imageNamed:@"back_button"] forState:(UIControlStateNormal)];
+    [self.backButton addTarget:self action:@selector(backtoWeather:) forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:self.backButton];
+    
+
+    [self.view addSubview:self.MyStoryButton];
+    [self.view addSubview:self.MyTNButton];
+    
+    
+    self.radioButton.transform = CGAffineTransformRotate(self.radioButton.transform, M_PI/15);
+    self.videoButton.transform = CGAffineTransformRotate(self.videoButton.transform, M_PI/-15);
+    
+    self.MyStoryButton.transform = CGAffineTransformRotate(self.MyStoryButton.transform, M_PI/20);
+    self.MyTNButton.transform = CGAffineTransformRotate(self.MyTNButton.transform, M_PI/-15);
+
+    
+
+}
+
+
+- (void)handleCollectRadio:(UIButton *)sender{
+
+    RadioCollectViewController *radioCVC = [[RadioCollectViewController alloc]init];
+    [self.navigationController pushViewController:radioCVC animated:YES];
+    [radioCVC release];
+}
+
+- (void)handleCollectVideo:(UIButton *)sender{
+
+    VideoCollectViewController *videoCVC = [[VideoCollectViewController alloc]init];
+    [self.navigationController pushViewController:videoCVC animated:YES];
+    [videoCVC release];
+    
+}
+
+- (void)collectAction:(UIButton *)sender{
+    StoryCollectController *VC = [[StoryCollectController alloc]init];
+    [self.navigationController pushViewController:VC animated:YES];
+    
+    
+}
+
+- (void)TNAction:(UIButton *)sender{
+    TNCollectController *tnVC = [[TNCollectController alloc]init];
+    [self.navigationController pushViewController:tnVC animated:YES];
+
+
+
+}
+
+
+
+
+
+- (void)handleAction:(UIButton *)handel{
+    WeatherController *weather = [[WeatherController alloc]init];
+    [self.navigationController pushViewController:weather animated:YES];
+}
+
+//- (void)handleAction:(UIButton *)handel{
+//    WeatherController *weather = [[WeatherController alloc]init];
+//    [self.navigationController pushViewController:weather animated:YES];
+//}
+
+
+
+
+- (void)backtoWeather:(UIButton *)sender{
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

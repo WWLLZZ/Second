@@ -1,0 +1,75 @@
+//
+//  NewsViewController.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/10/28.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "NewsViewController.h"
+#import "SCNavTabBarController.h"
+#import "AFNetworking.h"
+#import "NewsModel.h"
+#import "NewsController.h"
+#import "NewsViewCell.h"
+
+
+@interface NewsViewController ()
+@property (nonatomic,retain)NSMutableArray *viewArray;
+@property (nonatomic,retain)NSMutableArray *idArray;
+@property (nonatomic,retain)NSMutableArray *nameArray;
+@property (nonatomic,retain)NewsController *newsView;
+
+@end
+
+@implementation NewsViewController
+- (NSMutableArray *)nameArray{
+    if (_nameArray == nil) {
+        self.nameArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return [[_nameArray retain]autorelease];
+}
+- (NSMutableArray *)viewArray{
+    if (_viewArray == nil) {
+        self.viewArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return [[_viewArray retain]autorelease];
+}
+- (NSMutableArray *)idArray{
+    if (_idArray == nil) {
+        self.idArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return [[_idArray retain]autorelease];
+}
+
+- (void)dealloc
+{
+    self.nameArray = nil;
+    self.idArray = nil;
+    self.viewArray = nil;
+    [super dealloc];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self headerTitle];
+}
+
+- (void)headerTitle{
+    NSArray *titleArray = @[@"头条",@"汽车",@"军事",@"数码",@"旅游",@"暴雪游戏",@"财经",@"家居",@"游戏",@"情感",@"政务",@"艺术",@"葡萄酒",@"NBA",@"CBA",@"中国足球",@"教育",@"你照吗",@"漫画",@"原创",@"论坛",@"博客",@"酒香",@"体育"];
+    for (NSString *name in titleArray) {
+        NewsController *viewController = [[NewsController alloc] init];
+        viewController.title = name;
+        [self.viewArray addObject:viewController];
+    }
+    SCNavTabBarController *navTabBarController = [[SCNavTabBarController alloc] init];
+    navTabBarController.subViewControllers = self.viewArray;
+    navTabBarController.showArrowButton = YES;
+    [navTabBarController addParentController:self];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

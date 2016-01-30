@@ -1,0 +1,141 @@
+//
+//  MineViewController.m
+//  FeiFanNews
+//
+//  Created by lanouhn on 15/10/28.
+//  Copyright (c) 2015年 lanouhn. All rights reserved.
+//
+
+#import "MineViewController.h"
+#import "MineChirldViewController.h"
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
+
+@interface MineViewController ()
+@property (nonatomic,retain)MineChirldViewController *mineVC;
+@property (nonatomic,retain)UINavigationController *mineNC;
+@property (nonatomic,assign)BOOL isRight;
+@property (nonatomic,retain)UIViewController *viewControl;
+@end
+
+@implementation MineViewController
+- (void)dealloc
+{
+    self.viewControl = nil;
+    self.mineNC = nil;
+    self.mineVC = nil;
+    [super dealloc];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self drawerinView];
+//    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"mine"];
+}
+
+- (void)drawerinView{
+    self.view.backgroundColor = [UIColor greenColor];
+//    UIImageView *backImageView  = [[UIImageView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    backImageView.image = [UIImage imageNamed:@"12"];
+    self.mineVC = [[MineChirldViewController alloc]init];
+    UINavigationController *rootNC = [[UINavigationController alloc]initWithRootViewController:self.mineVC];
+    self.mineNC = rootNC;
+//    self.mineVC = [[MineChirldViewController alloc]init];
+    self.mineVC.view.frame = CGRectMake(0, 64, kScreenWidth, kScreenHeight);
+    [self addChildViewController:self.mineNC];
+     [self.view addSubview:self.mineNC.view];
+//    把viewControl添加到主视图上面
+//    [self.view addSubview:self.viewControl.view];
+    
+  
+//       [backImageView release];
+//    将另外一个视图作为viewControl的子视图
+//    [self addChildViewController:self.mineVC];
+   
+    self.navigationItem.rightBarButtonItem = ({
+        UIBarButtonItem *rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"抽屉" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemAction:)];
+        rightBarButtonItem;
+    });
+}
+- (void)rightBarButtonItemAction:(UIBarButtonItem *)sender
+{
+    if (!self.isRight) {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.mineNC.view.frame = CGRectMake(-kScreenWidth*0.21, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height -kScreenWidth*0.1 );
+            self.navigationController.navigationBar.frame = CGRectMake(-kScreenWidth *0.21, 0, kScreenWidth, 64);
+            self.tabBarController.tabBar.frame = CGRectMake(-kScreenWidth *0.21, kScreenHeight-64, kScreenWidth, 49);
+        }];
+    } else {
+        [UIView animateWithDuration:0.5 animations:^{
+            self.mineNC.view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        self.navigationController.navigationBar.frame = CGRectMake(0, 0, kScreenWidth, 64);
+            self.tabBarController.tabBar.frame = CGRectMake(0, kScreenHeight-49, kScreenWidth, 49);
+        }];
+    }
+    self.isRight = !_isRight;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+//#warning Potentially incomplete method implementation.
+    // Return the number of sections.
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//#warning Incomplete method implementation.
+    // Return the number of rows in the section.
+    return 2;
+}
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

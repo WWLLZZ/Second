@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5B02101D-60AA-45A3-87D9-2758AD21D998",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370" : "FeiFanNews%20"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "FeiFanNews",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "FeiFanNews.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/svnchina.com\/svn\/waige37",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370"
+    }
+  ]
+}

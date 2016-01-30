@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>5B02101D-60AA-45A3-87D9-2758AD21D998</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FeiFanNews</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370</key>
+		<string>http://svnchina.com/svn/waige37/FeiFanNews%2525252525252525252525252525252525252525252525252520</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FeiFanNews.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370</key>
+		<string>http://svnchina.com/svn/waige37</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>http://svnchina.com/svn/waige37/FeiFanNews%2525252525252525252525252525252525252525252525252520/FeiFanNews.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4f5d4d0a-ac55-461a-a513-0803d2679d2b++1370</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FeiFanNews%20</string>
+		</dict>
+	</array>
+</dict>
+</plist>
